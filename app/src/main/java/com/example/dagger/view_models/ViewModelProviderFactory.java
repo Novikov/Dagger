@@ -8,14 +8,14 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-public class ViewModelProvidersFactory implements ViewModelProvider.Factory {
+public class ViewModelProviderFactory implements ViewModelProvider.Factory {
 
     private static final String TAG = "ViewModelProviderFactor";
 
     private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
 
     @Inject
-    public ViewModelProvidersFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
+    public ViewModelProviderFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
         this.creators = creators;
     }
 
