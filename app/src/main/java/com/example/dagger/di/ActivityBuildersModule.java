@@ -3,6 +3,7 @@ package com.example.dagger.di;
 import com.example.dagger.di.auth.AuthModule;
 import com.example.dagger.di.auth.AuthViewModulesModule;
 import com.example.dagger.di.main.MainFragmentBuildersModule;
+import com.example.dagger.di.main.MainModule;
 import com.example.dagger.di.main.MainViewModelsModule;
 import com.example.dagger.ui.auth.AuthActivity;
 import com.example.dagger.ui.main.MainActivity;
@@ -17,6 +18,6 @@ public abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = {AuthViewModulesModule.class, AuthModule.class})
     abstract AuthActivity contributeAuthActivity();
 
-    @ContributesAndroidInjector(modules = {MainFragmentBuildersModule.class, MainViewModelsModule.class})
+    @ContributesAndroidInjector(modules = {MainFragmentBuildersModule.class, MainViewModelsModule.class, MainModule.class})
     abstract MainActivity contributeMainActivity();
 }
