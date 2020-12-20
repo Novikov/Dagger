@@ -21,6 +21,8 @@ import com.example.dagger.ui.main.MainActivity;
 import com.example.dagger.view_models.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class AuthActivity extends DaggerAppCompatActivity implements View.OnClickListener {
@@ -41,6 +43,14 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
     @Inject
     RequestManager requestManager;
 
+    @Inject
+    @Named("app_user")
+    User userNumber1;
+
+    @Inject
+    @Named("auth_user")
+    User userNumber2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +65,9 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
         setLogo();
 
         subscribeObservers();
+
+        Log.d("UserInMemory", "user number 1: "+ userNumber1);
+        Log.d("UserInMemory", "user number 2: "+ userNumber2);
     }
 
     private void subscribeObservers(){
