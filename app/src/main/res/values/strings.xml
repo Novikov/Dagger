@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Dagger</string>
     <string name="logout">logout</string>
+    <string name="profile">profile</string>
+    <string name="posts">posts</string>
+    <string name="fragment_profile">fragment profile</string>
+    <string name="fragment_posts">fragment posts</string>
 </resources>
