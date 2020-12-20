@@ -1,6 +1,7 @@
 package com.example.dagger.di.main;
 
 import com.example.dagger.network.main.MainApi;
+import com.example.dagger.ui.main.posts.PostRecyclerAdapter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,5 +15,8 @@ public class MainModule {
         return retrofit.create(MainApi.class);
     }
 
-
+    @Provides
+    static PostRecyclerAdapter providesAdapter(){
+        return new PostRecyclerAdapter();
+    }
 }

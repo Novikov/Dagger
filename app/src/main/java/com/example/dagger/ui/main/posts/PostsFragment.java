@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dagger.R;
 import com.example.dagger.models.Post;
 import com.example.dagger.ui.main.Resource;
+import com.example.dagger.util.VerticalSpaceItemDecoration;
 import com.example.dagger.view_models.ViewModelProviderFactory;
 
 import java.util.List;
@@ -30,6 +32,9 @@ public class PostsFragment extends DaggerFragment {
 
     private PostsViewModel viewModel;
     private RecyclerView recyclerView;
+
+    @Inject
+    PostRecyclerAdapter adapter;
 
     @Inject
     ViewModelProviderFactory providerFactory;
@@ -48,6 +53,7 @@ public class PostsFragment extends DaggerFragment {
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(PostsViewModel.class);
 
+        initRecyclerView();
         subscribeObservers();
     }
 
@@ -57,10 +63,33 @@ public class PostsFragment extends DaggerFragment {
             @Override
             public void onChanged(Resource<List<Post>> listResource) {
                 if(listResource != null){
-                    Log.d(TAG, "onChanged: " + listResource.data);
+                    switch (listResource.status){
+                        case LOADING:{
+                            Log.d(TAG, "onChanged: PostsFragment: LOADING...");
+                            break;
+                        }
+
+                        case SUCCESS:{
+                            Log.d(TAG, "onChanged: PostsFragment: got posts.");
+                            adapter.setPosts(listResource.data);
+                            break;
+                        }
+
+                        case ERROR:{
+                            Log.d(TAG, "onChanged: PostsFragment: ERROR... " + listResource.message);
+                            break;
+                        }
+                    }
                 }
             }
         });
+    }
+
+    private void initRecyclerView(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        VerticalSpaceItemDecoration itemDecoration = new VerticalSpaceItemDecoration(15);
+        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setAdapter(adapter);
     }
 
 }
