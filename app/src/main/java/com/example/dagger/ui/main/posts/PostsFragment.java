@@ -9,11 +9,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dagger.R;
+import com.example.dagger.models.Post;
+import com.example.dagger.ui.main.Resource;
 import com.example.dagger.view_models.ViewModelProviderFactory;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -43,8 +48,20 @@ public class PostsFragment extends DaggerFragment {
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(PostsViewModel.class);
 
-        Toast.makeText(getContext(), "PostsFragment", Toast.LENGTH_SHORT).show();
+        subscribeObservers();
     }
 
+    private void subscribeObservers(){
+        viewModel.observePosts().removeObservers(getViewLifecycleOwner());
+        viewModel.observePosts().observe(getViewLifecycleOwner(), new Observer<Resource<List<Post>>>() {
+            @Override
+            public void onChanged(Resource<List<Post>> listResource) {
+                if(listResource != null){
+                    Log.d(TAG, "onChanged: " + listResource.data);
+                }
+            }
+        });
+    }
 
 }
+
